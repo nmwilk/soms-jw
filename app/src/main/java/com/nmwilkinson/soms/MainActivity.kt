@@ -8,6 +8,7 @@ import com.nmwilkinson.soms.model.submitAction
 import com.nmwilkinson.soms.ui.allEvents
 import com.nmwilkinson.soms.ui.resultMapper
 import com.nmwilkinson.soms.view.visible
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,7 +23,7 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         disposables.add(allEvents(submitButton, valueField, valueField)
-                .compose(submitAction(api))
+                .compose(submitAction(api, AndroidSchedulers.mainThread()))
                 .startWith(Result.SubmitResult(Result.IDLE))
                 .compose { resultMapper(it) }
                 .subscribe({
