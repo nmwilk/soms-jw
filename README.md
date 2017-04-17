@@ -1,6 +1,6 @@
-# Managing State with RxJava
+# The State of Managing State with RxJava
 
-Write up in Kotlin of Jake Wharton's talk - https://www.youtube.com/watch?v=0IKHxjkgop4
+Write up in Kotlin of Jake Wharton's talk - http://jakewharton.com/the-state-of-managing-state-with-rxjava/
 
 See tag `pre34mins` for code prior to `Action`/`Result` abstraction.
 
