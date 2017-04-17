@@ -3,8 +3,6 @@ package com.nmwilkinson.soms
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
-import com.nmwilkinson.soms.Model.Companion.allEvents
-import com.nmwilkinson.soms.Model.Companion.submitUI
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
