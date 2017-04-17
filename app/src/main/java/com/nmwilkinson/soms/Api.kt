@@ -12,7 +12,7 @@ class Api {
                 .delay(500, TimeUnit.MILLISECONDS)
     }
 
-    fun checkName(value: String): Observable<Boolean> {
+    fun checkValue(value: String): Observable<Boolean> {
         return Observable.just(true)
                 .delay(500, TimeUnit.MILLISECONDS)
     }

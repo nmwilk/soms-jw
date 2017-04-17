@@ -27,8 +27,6 @@ class MainActivity : Activity() {
                     }
                 }, {
                     throw IllegalStateException("Unhandled error")
-                }, {
-                    Toast.makeText(this@MainActivity, "Complete", Toast.LENGTH_SHORT).show()
                 }))
     }
 
