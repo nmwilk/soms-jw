@@ -18,12 +18,14 @@ class MainActivity : Activity() {
 
         disposables.add(allEvents(submitButton, valueField, valueField)
                 .compose(submitUI(api))
+                .startWith(State.Idle())
                 .subscribe({
                     submitButton.isEnabled = !it.inProgress
                     progressView.visible(it.inProgress)
-                    if (!it.inProgress) {
-                        val resultMsg = if (it.success) "Success" else "Error: ${it.error}"
-                        Toast.makeText(this@MainActivity, resultMsg, Toast.LENGTH_SHORT).show()
+                    when {
+                        it.submitted -> Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
+                        it.entryValid -> Toast.makeText(this@MainActivity, "Entry Valid", Toast.LENGTH_SHORT).show()
+                        it.error.isNotEmpty() -> Toast.makeText(this@MainActivity, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
                     }
                 }, {
                     throw IllegalStateException("Unhandled error")

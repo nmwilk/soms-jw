@@ -50,7 +50,7 @@ fun checkValue(api: Api): ObservableTransformer<UiEvent.CheckValueEvent, State> 
                 .delay(1000, TimeUnit.MILLISECONDS)
                 .doOnNext { result: Boolean -> Log.d("checkValue", "onNext($result)") }
                 .doOnComplete { Log.d("checkValue", "doOnComplete()") }
-                .map { State.Success() }
+                .map { State.EntryValid() }
                 .onErrorReturn { State.Error(it.message ?: "Unknown") }
                 .observeOn(AndroidSchedulers.mainThread())
                 .startWith(State.InProgress())
