@@ -1,4 +1,4 @@
-package com.nmwilkinson.soms
+package com.nmwilkinson.soms.view
 
 import android.view.View
 import android.widget.ProgressBar
