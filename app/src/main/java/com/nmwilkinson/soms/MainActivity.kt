@@ -24,7 +24,6 @@ class MainActivity : Activity() {
                     progressView.visible(it.inProgress)
                     when {
                         it.submitted -> Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
-                        it.entryValid -> Toast.makeText(this@MainActivity, "Entry Valid", Toast.LENGTH_SHORT).show()
                         it.error.isNotEmpty() -> Toast.makeText(this@MainActivity, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
                     }
                 }, {
