@@ -30,33 +30,33 @@ sealed class Result(val state: Int, val value: String) {
 }
 
 
-fun submit(api: Api, scheduler: Scheduler): ObservableTransformer<Action, Result> = ObservableTransformer { events ->
+fun submit(api: Api, observeOn: Scheduler): ObservableTransformer<Action, Result> = ObservableTransformer { events ->
     events.flatMap { action: Action ->
         api.sendValue(action.value)
                 .map { Result.SubmitResult(Result.SUCCESS) }
                 .onErrorReturn { Result.SubmitResult(Result.ERROR, "Submit failed") }
-                .observeOn(scheduler)
+                .observeOn(observeOn)
                 .startWith(Result.SubmitResult(Result.IN_FLIGHT))
     }
 }
 
-fun checkValue(api: Api, scheduler: Scheduler): ObservableTransformer<Action, Result> = ObservableTransformer { events ->
+fun checkValue(api: Api, observeOn: Scheduler): ObservableTransformer<Action, Result> = ObservableTransformer { events ->
     events.switchMap { action ->
         api.checkValue(action.value)
                 .delay(1000, TimeUnit.MILLISECONDS)
                 .map { if (it) Result.CheckValueResult(Result.SUCCESS) else Result.CheckValueResult(Result.ERROR, "Validation failed") }
                 .onErrorReturn { Result.CheckValueResult(Result.ERROR, "Check value failed") }
-                .observeOn(scheduler)
+                .observeOn(observeOn)
                 .startWith(Result.CheckValueResult(Result.IN_FLIGHT))
     }
 }
 
-fun submitAction(api: Api, scheduler: Scheduler): ObservableTransformer<Action, Result> = ObservableTransformer {
+fun submitAction(api: Api, observeOn: Scheduler): ObservableTransformer<Action, Result> = ObservableTransformer {
     events ->
     events.publish { shared ->
         Observable.merge(
-                shared.ofType(Action.SubmitAction::class.java).compose(submit(api, scheduler)),
-                shared.ofType(Action.CheckValueAction::class.java).compose(checkValue(api, scheduler))
+                shared.ofType(Action.SubmitAction::class.java).compose(submit(api, observeOn)),
+                shared.ofType(Action.CheckValueAction::class.java).compose(checkValue(api, observeOn))
         )
     }
 }
