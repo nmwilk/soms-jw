@@ -11,7 +11,7 @@ import io.reactivex.Observable
 /**
  * UI state model
  */
-class UiModel(val inProgress: Boolean, val submitted: Boolean, val error: String) {
+data class UiModel(val inProgress: Boolean, val submitted: Boolean, val error: String) {
     companion object {
         fun Idle() = UiModel(false, false, "")
         fun InProgress() = UiModel(true, false, "")

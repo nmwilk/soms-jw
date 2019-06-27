@@ -26,6 +26,7 @@ class MainActivity : Activity() {
                 .compose(submitAction(api, AndroidSchedulers.mainThread()))
                 .startWith(Result.SubmitResult(Result.IDLE))
                 .compose { resultMapper(it) }
+                .distinctUntilChanged()
                 .subscribe({
                     submitButton.isEnabled = !it.inProgress
                     progressView.visible(it.inProgress)
