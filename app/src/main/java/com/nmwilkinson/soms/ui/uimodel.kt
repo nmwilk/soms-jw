@@ -55,6 +55,5 @@ fun resultMapper(results: Observable<Result>): Observable<UiModel>
                 else -> UiModel.Idle()
             }
         }
-        else -> throw IllegalStateException("Unhandled ${Result::class.java.simpleName} subclass")
     }
 })
